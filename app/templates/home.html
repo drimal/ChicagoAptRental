@@ -1,80 +1,157 @@
+<!DOCTYPE html>
 <html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+<head>
+    <title>Home: Machine Learning App with Flask</title>
+</head>
 <body>
-    <h3>Chicago Apartment Rental Price Prediction</h3>
-
-<div>
-    <form action="/result" method="POST">
-    <label for="beds">Number of beds </label>
-    <select id="beds" name="beds">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-      <option value="6">6</option>
-      <option value="7">7</option>
-    </select>
-    <br>
-    <label for="baths">Baths</label>
-    <select id="baths" name="baths">
-      <option value="0">0</option>
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-      <option value="6">6</option>
-      <option value="7">7</option>
-    </select>
-    <br>
-    <label for="neighbourhood">Neighbourhood</label>
-    <select id="neighbourhood" name="neighbourhood">
-      <option value="1">Albany Park</option>
-      <option value="2">Andersonville</option>
-      <option value="3">Avondale</option>
-      <option value="4">Beverly</option>
-      <option value="5">Boystown</option>
-      <option value="6">Bridgeport</option>
-      <option value="7">Brozenville</option>
-      <option value="8">Bucktown</option>
-      <option value="9">Chinatown</option>
-      <option value="10">Edgewater</option>
-      <option value="11">Gold Coast</option>
-      <option value="12">Humboldt Park </option>
-      <option value="13">Hyde Park</option>
-      <option value="14">Irving Park</option>
-      <option value="15">Jefferson Park</option>
-      <option value="16">Kenwood</option>
-      <option value="17">Lakeview</option>
-      <option value="18">Lincoln Park</option>
-      <option value="19">Lincoln Square</option>
-      <option value="20">Little Italy & University Village</option>
-      <option value="21">Little Village</option>
-      <option value="22">Logan Square</option>
-      <option value="23">Loop</option>
-      <option value="24">Magnificent Mile</option>
-      <option value="25">North Center</option>
-      <option value="26">North Park</option>
-      <option value="27">Old Town</option>
-      <option value="28">Pilsen</option>
-      <option value="29">Portage Park</option>
-      <option value="30">Pullman</option>
-      <option value="31">River North</option>
-      <option value="32">Rogers Park</option>
-      <option value="33">Rascoe Village</option>
-      <option value="34">South Loop</option>
-      <option value="35">South Shore</option>
-      <option value="36">Streeterville</option>
-      <option value="37">Uptown</option>
-      <option value="38">West Loop</option>
-      <option value="39">West Ridge</option>
-      <option value="40">West Town</option>
-      <option value="41">Wicker Park/Bucktown</option>
-      <option value="42">Wrigleyville</option>
-    </select>
-    <br>
-    <input type="submit" value="Submit">
-  </form>
+    <header>
+        <div class="container">
+            <div id="name">
+            </div>
+            <h2> Apartment Rental Price in Chicago </h2>
+        </div>
+    </header>
+    <style> {
+        box-sizing: border-box;
+    }
+    .row {
+        display: flex;
+    }
+    /* Create two equal columns that sits next to each other */
+    .column {
+        flex: 50%;
+        padding: 10px;
+        height: 300px;
+    }
+    </style>
+<h4> The data for this project was obtained by scraping 5k apartment rental listings in <a href="https://chicago.craigslist.org/d/apts-housing-for-rent/search/apa"> Chicago craigslist </a>. The neighbourhood information scraped from the craigslist was incomplete so the latitude and longitude information was mapped to the neighborhoods. After some data wrangling and EDA, couple of tree based regressor were fitted. The final trained model is the gradient boosting regressor with R<sup>2</sup> of 0.8 on the validation data. </h4>
+<div class="row">
+  <div class="column" style="background-color:##DFB887;">
+    <img src="{{url_for('static', filename='chicago.jpg')}}" , alt=" Results: Real vs Predicted Price", height="300" width="400">
+  </div>
+  <div class="column" style="background-color:##DFB887;">
+    <h2> Choose your selections </h2>
+    <div class="container">
+        <form action="/result" method="POST">
+        <label for="beds">Beds </label>
+        <select id="beds" name="beds">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+        <br>
+        <label for="baths">Baths</label>
+        <select id="baths" name="baths">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+        <br>
+        <label for="neighbourhood">Neighbourhood</label>
+        <select id="neighbourhood" name="neighbourhood">
+          <option value="0">ANDERSONVILLE</option>
+          <option value="1">ARCHER HEIGHTS,WEST ELSDON </option>
+          <option value="2">ARMOUR SQUARE,CHINATOWN</option>
+          <option value="3">AUBURN GRESHAM</option>
+          <option value="4">AUSTIN</option>
+          <option value="5">BACK OF THE YARDS</option>
+          <option value="6">BELMONT CRAIGIN</option>
+          <option value="7">HERMOSA</option>
+          <option value="8">BRIDGEPORT</option>
+          <option value="9">BRIGHTON PARK,MCKINLEY PARK</option>
+          <option value="10">BRONZEVILLE</option>
+          <option value="11">BUCKTOWN</option>
+          <option value="12">CHATHAM,BURNSIDE </option>
+          <option value="13">DUNNING</option>
+          <option value="14">EDGEWATER</option>
+          <option value="15">EDISON PARK</option>
+          <option value="16">ENGLEWOOD</option>
+          <option value="17">GARFIELD PARK</option>
+          <option value="18">GOLD COAST</option>
+          <option value="19">GRANT PARK</option>
+          <option value="20">GREEKTOWN</option>
+          <option value="21">HUMBOLDT PARK</option>
+          <option value="22">HYDE PARK</option>
+          <option value="23">IRVING PARK,AVONDALE</option>
+          <option value="24">JACKSON PARK</option>
+          <option value="25">JEFFERSON PARK</option>
+          <option value="26">KENWOOD,OAKLAND</option>
+          <option value="27">LAKE VIEW</option>
+          <option value="28">LINCOLN PARK</option>
+          <option value="29">LINCOLN SQUARE</option>
+          <option value="30">LITTLE ITALY, UIC</option>
+          <option value="31">LITTLE VILLAGE</option>
+          <option value="32">LOGAN SQUARE</option>
+          <option value="33">LOOP</option>
+          <option value="34">LOWER WEST SIDE</option>
+          <option value="35">LOWER WEST SIDE</option>
+          <option value="36">MIDWAY AIRPORT</option>
+          <option value="37">MONTCLARE, GALEWOOD</option>
+          <option value="38">MOUNT GREENWOOD,MORGAN PARK</option>
+          <option value="39">NEAR SOUTH SIDE</option>
+          <option value="40">NORTH CENTER</option>
+          <option value="41">NORTH LAWNDALE</option>
+          <option value="42">NORTH PARK,ALBANY PARK</option>
+          <option value="43">NORWOOD PARK</option>
+          <option value="44">OAKLAND,KENWOOD</option>
+          <option value="45">OLD TOWN</option>
+          <option value="46">PORTAGE PARK</option>
+          <option value="47">PRINTERS ROW</option>
+          <option value="48">RIVER NORTH</option>
+          <option value="49">RIVERDALE</option>
+          <option value="50">ROGERS PARK</option>
+          <option value="51">RUSH & DIVISION</option>
+          <option value="52">SAUGANASH,FOREST GLEN</option>
+          <option value="53">SHEFFIELD & DEPAUL</option>
+          <option value="54">SOUTH CHICAGO</option>
+          <option value="55">SOUTH SHORE, GRAND CROSSING</option>
+          <option value="56">SOUTHEAST SIDE</option>
+          <option value="57">STREETERVILLE</option>
+          <option value="58">UKRAINIAN VILLAGE AND EAST VILLAGE</option>
+          <option value="59">UNITED CENTER</option>
+          <option value="60">UPTOWN</option>
+          <option value="61">WASHINGTON HEIGHTS,ROSELAND</option>
+          <option value="62">WASHINGTON PARK</option>
+          <option value="63">WEST LOOP</option>
+          <option value="64">WEST RIDGE</option>
+          <option value="65">WICKER PARK,WEST TOWN</option>
+          <option value="66">WOODLAWN</option>
+          <option value="67">WRIGLEYVILLE</option>
+        </select>
+        <br>
+    <!--
+        <label for="pets">Pets Allowed</label>
+        <select id="pets" name="pets">
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+        <br>
+        <label for="amenity">Washer/Dryer</label>
+        <select id="amenity" name="amenity">
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+        <br>
+    !-->
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+    </div>
+    </div>
+    <div class="row">
+    <div class="column" style="background-color:##ffffff;">
+      <img src="{{url_for('static', filename='result.png')}}" , alt=" Results: Real vs Predicted Price", height="300" width="400">
+    </div>
+    <div class="column" style="background-color:##ffffff;">
+        <img src="{{url_for('static', filename='compare.png')}}" , alt=" Results: Real vs Predicted Price", height="300" width="400">
+    </div>
 </div>
 </body>
+
 </html>

@@ -1,0 +1,16 @@
+# Steps to deploy 
+1. Install Heroku CLI
+	$brew tap heroku/brew && brew install heroku
+2. Login to Heroku
+	$heroku login
+3. Create Heroku Procfile, which tells heroku what to run
+	$echo "web: gunicorn app:app" > Procfile
+4. Create App
+	$heroku create my-awesome-app
+5. Add it to git, commit and push 
+	$git add .
+	$git commit -m 'first import'
+	$ git push heroku master
+6. On the CLI:
+	$ heroku ps:scale web=1
+7. Heroku open 

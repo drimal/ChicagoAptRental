@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head>
+<title> Apartment Rental Price in Chicago</title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css')}}">
+</head>
+
+<body>
+<header>
+    <div class="container">
+        <div id="name">
+            <h2> This is a gradient boosting regressor model (GBM) and has R<sup>2</sup> of 0.8. <h2>
+            <h2> This model predicts the rental price for your selection to be  {{ prediction }}. </h2>
+        </div>
+    </div>
+    <iframe src="https://maps.google.com/maps?q=Chicago%20&t=&z=13&ie=UTF8&iwloc=&output=embed" width="800" height="400"
+frameborder="0" style="border:0" allowfullscreen></iframe>
+   </body>
+</html>
