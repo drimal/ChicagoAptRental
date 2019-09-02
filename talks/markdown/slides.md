@@ -3,6 +3,8 @@
 
 ## Outline
 
+---
+
 - [Motivation](#motivation)
 - [Data Collection](#data-collection)
 - [Data Processing](#data-processing)
@@ -25,6 +27,8 @@
 
 ## Data Collection
 
+---
+
 <img src="../img/craiglist.png" width="350" class="left">
 <div class="right">
 
@@ -38,6 +42,8 @@
 ---
 
 ## Example Code
+
+---
 
 ```
 def parse(self, response):
@@ -77,16 +83,16 @@ def parse_from_item_detail_page(self, response):
     except:
         pass
     return item
-```
 
----
+```
 
 #
 
 ## Data Preprocessing
 
-<img src="../img/head.png" width="300" class="left">
+---
 
+<img src="../img/head.png" width="300" class="left">
 <div class="right">
 
 - The scraped data requires some cleaning/preprocessing:
@@ -100,9 +106,10 @@ def parse_from_item_detail_page(self, response):
     -Dealing with extreme outliers
 </div>
 
----
 
 ## Missing Values
+
+---
 
 <img src="../img/missing_info.png" width="400" class="left">
 <div class="right">
@@ -112,45 +119,50 @@ def parse_from_item_detail_page(self, response):
 - The other information is not very helpful. This column was not used.
 - Reconstructed neighborhood from latitude/longitude
 - Filled missing beds/baths with median values.
+
 </div>
----
+
 
 ## Outliers
 
-<img src="../img/beds.png" width="400" class="left">
+---
+
+<img src="../img/beds.png" width="380" class="left">
 <img src="../img/extremes.png" width="400" class="right">
 
-- examples: way too many beds, extreme prices etc.
-
----
+- examples: way too many beds, extreme prices (0-309900).
 
 #
 
 ## Exploratory Analysis
 
-<img src="../img/heatmap.png" width="350"  height="300" class="left">
-<img src="../img/price_distributions.png" width="350"  height="300" class="right">
+---
+
+<img src="../img/heatmap.png" width="280"  height="380" class="left">
+<img src="../img/price_distributions.png" width="280" height="380" class="right">
 
 - The price is not normally distributed, is skewed to the right.
 
 - Linear model is not a good option, can try to log-transform the price.
 
----
 
 ## Exploratory Analysis
 
-<img src="../img/log_transformed_price.png" class="left">
+---
 
-<img src="../img/beds_vs_price.png" class="right">
+<img src="../img/log_transformed_price.png"  width="400" height="400" class="left">
+<img src="../img/beds_vs_price.png" width="400" height="400" class="right">
 
 - Log-transformed price is normally distributed.
 
----
 
 #
 
 ## Feature Engineering
-<img src="../img/distance_from_us.png"  class="left">
+
+---
+
+<img src="../img/distance_from_us.png" class="left">
 <div class="right">
 - Distance from the city center (Union Station)
 
@@ -169,47 +181,67 @@ def get_distance_from_union_station(lon2, lat2):
     return c * r
 ```
 </div>
+
 - Transform latitude, longitude to neighborhoods, use one-hot-encoded neighborhood as the model Feature.
-
-
----
 
 ## Correlation Matrix
 
-<img src="../img/correlation_matrix.png"  height="400" class="left">
+---
+
+<img src="../img/correlation_matrix.png" height="400" class="left">
 <div class="right">
 - The price is anti-correlated with the distance from the union station and correlated with beds/baths
 - The latitude/longitude gets encoded into neighborhoods, I did not use them in the final model.
 
 </div>
 
----
 
 #
 
 ## Modeling
 
+---
+
 - Randomly split data into training and testing sample (70/30 split)
-- Fitted couple different models on the training set and evaluated model performance on the test set
-- Used MSE criteria for model evaluation
-- Linear model did not perform well as the relationship is not linear.
+- Fitted different models (linear and tree-based) on the training set and evaluated model performance on the test set
+- Used mean squared error (MSE) criteria for model evaluation
+- Linear models did not perform as well as the tree based models
 - Tree based ensemble model (RandomForest and Gradient Boosting Model) showed similar performance with GBM performing slightly better.
-- GBM model was further tuned using Randomized Search Cross Validation technique to optimize hyper-parameters.
 
-
-## Model Performance
-
-<img src="../img/compare.png" width="20" height="380" class="left">
-<img src="../img/result.png" width="20" height="380" class="right">
+## Results
 
 ---
 
-## Model Performance
+<img src="../img/compare.png" height="400" class="left">
+<img src="../img/result.png" width="" height="400" class="right">
 
-<img src="../img/residual.png" width="20" height="380">
+- Out of box GBM model was further tuned using Randomized Search Cross Validation technique to optimize hyper-parameters.
+
+---
+
+## Results (contd..)
+
+---
+
+<img src="../img/residual.png" width="400" height="380">
+
+- The final model has coefficient of determination ($R^{2}$) of 0.8 meaning that the 80% of the observation variation is explained by the model.
+
 
 #
 
 ## Model Deployment
-- Picklized the final model and wrote a flask application deployed as an heroku app.
-- [Deployed Model in Heroku ](https://chi-apt-rental-app.herokuapp.com)
+
+---
+
+- Picklized the final gbm model and wrote a flask application to deploy as an heroku app.
+- [Deployed model in Heroku ](https://chi-apt-rental-app.herokuapp.com)
+
+#
+
+## Summary
+
+- Developed end-to-end project (data collection, cleaning/wrangling, modeling, model deployment) to model apartment rental price in Chicago using craigslist data
+- Other Data Science Projects:
+    - Modeling Restaurant Inspection in the city of Chicago
+    - Exploratory data analysis to study the efficacy of Supplemental instruction (SI) methods in the physics department in an US University.

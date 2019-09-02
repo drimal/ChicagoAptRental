@@ -20,9 +20,9 @@
 
       <link rel="stylesheet" href="../reveal.js/css/theme/white.css" id="theme">
   
-      <link rel="stylesheet" href="../../template/monokai_mod.css">
+      <link rel="stylesheet" href="../template/monokai_mod.css">
   
-  <link rel="stylesheet" href="../../template/extra.css">
+  <link rel="stylesheet" href="../template/extra.css">
 
   <script>
     document.write('<link rel="stylesheet" href="../reveal.js/css/print/' +
@@ -30,8 +30,8 @@
       '.css" type="text/css" media="print">');
   </script>
 
-  <script src="../../template/snap.svg-min.js"></script>
-  <script src="../../template/plotly-latest.min.js"></script>
+  <script src="../template/snap.svg-min.js"></script>
+  <script src="../template/plotly-latest.min.js"></script>
 
   <!--[if lt IE 9]>
   <script src="../reveal.js/lib/js/html5shiv.js"></script>
@@ -59,6 +59,7 @@
 
        <section id="outline" class="level2">
 <h2>Outline</h2>
+<hr />
 <ul>
 <li><a href="#motivation">Motivation</a></li>
 <li><a href="#data-collection">Data Collection</a></li>
@@ -84,6 +85,7 @@
 <h1></h1>
 <section id="data-collection" class="level2">
 <h2>Data Collection</h2>
+<hr />
 <img src="../img/craiglist.png" width="350" class="left">
 <div class="right">
 <ul>
@@ -97,6 +99,7 @@
 </section>
 <section id="example-code" class="level2">
 <h2>Example Code</h2>
+<hr />
 <pre><code>def parse(self, response):
     # Get listings from the response
     postings = response.xpath(&quot;.//p&quot;)
@@ -133,15 +136,16 @@ def parse_from_item_detail_page(self, response):
         item[&#39;others&#39;] = attr.xpath(&quot;span/text()&quot;).extract()[2:]
     except:
         pass
-    return item</code></pre>
-<hr />
+    return item
+</code></pre>
 </section>
 </section>
 <section id="section-2" class="level1">
 <h1></h1>
 <section id="data-preprocessing" class="level2">
 <h2>Data Preprocessing</h2>
-<p><img src="../img/head.png" width="300" class="left"></p>
+<hr />
+<img src="../img/head.png" width="300" class="left">
 <div class="right">
 <ul>
 <li><p>The scraped data requires some cleaning/preprocessing:</p>
@@ -151,10 +155,10 @@ def parse_from_item_detail_page(self, response):
 -Dealing with extreme outliers</li>
 </ul>
 </div>
-<hr />
 </section>
 <section id="missing-values" class="level2">
 <h2>Missing Values</h2>
+<hr />
 <img src="../img/missing_info.png" width="400" class="left">
 <div class="right">
 <ul>
@@ -165,43 +169,42 @@ def parse_from_item_detail_page(self, response):
 <li>Filled missing beds/baths with median values.</li>
 </ul>
 </div>
-<hr />
 </section>
 <section id="outliers" class="level2">
 <h2>Outliers</h2>
-<p><img src="../img/beds.png" width="400" class="left"> <img src="../img/extremes.png" width="400" class="right"></p>
-<ul>
-<li>examples: way too many beds, extreme prices etc.</li>
-</ul>
 <hr />
+<p><img src="../img/beds.png" width="380" class="left"> <img src="../img/extremes.png" width="400" class="right"></p>
+<ul>
+<li>examples: way too many beds, extreme prices (0-309900).</li>
+</ul>
 </section>
 </section>
 <section id="section-3" class="level1">
 <h1></h1>
 <section id="exploratory-analysis" class="level2">
 <h2>Exploratory Analysis</h2>
-<p><img src="../img/heatmap.png" width="350"  height="300" class="left"> <img src="../img/price_distributions.png" width="350"  height="300" class="right"></p>
+<hr />
+<p><img src="../img/heatmap.png" width="280"  height="380" class="left"> <img src="../img/price_distributions.png" width="280" height="380" class="right"></p>
 <ul>
 <li><p>The price is not normally distributed, is skewed to the right.</p></li>
 <li><p>Linear model is not a good option, can try to log-transform the price.</p></li>
 </ul>
-<hr />
 </section>
 <section id="exploratory-analysis-1" class="level2">
 <h2>Exploratory Analysis</h2>
-<p><img src="../img/log_transformed_price.png" class="left"></p>
-<p><img src="../img/beds_vs_price.png" class="right"></p>
+<hr />
+<p><img src="../img/log_transformed_price.png"  width="400" height="400" class="left"> <img src="../img/beds_vs_price.png" width="400" height="400" class="right"></p>
 <ul>
 <li>Log-transformed price is normally distributed.</li>
 </ul>
-<hr />
 </section>
 </section>
 <section id="section-4" class="level1">
 <h1></h1>
 <section id="feature-engineering" class="level2">
 <h2>Feature Engineering</h2>
-<img src="../img/distance_from_us.png"  class="left">
+<hr />
+<img src="../img/distance_from_us.png" class="left">
 <div class="right">
 <ul>
 <li>Distance from the city center (Union Station)</li>
@@ -222,50 +225,72 @@ def parse_from_item_detail_page(self, response):
 <ul>
 <li>Transform latitude, longitude to neighborhoods, use one-hot-encoded neighborhood as the model Feature.</li>
 </ul>
-<hr />
 </section>
 <section id="correlation-matrix" class="level2">
 <h2>Correlation Matrix</h2>
-<img src="../img/correlation_matrix.png"  height="400" class="left">
+<hr />
+<img src="../img/correlation_matrix.png" height="400" class="left">
 <div class="right">
 <ul>
 <li>The price is anti-correlated with the distance from the union station and correlated with beds/baths</li>
 <li>The latitude/longitude gets encoded into neighborhoods, I did not use them in the final model.</li>
 </ul>
 </div>
-<hr />
 </section>
 </section>
 <section id="section-5" class="level1">
 <h1></h1>
 <section id="modeling" class="level2">
 <h2>Modeling</h2>
+<hr />
 <ul>
 <li>Randomly split data into training and testing sample (70/30 split)</li>
-<li>Fitted couple different models on the training set and evaluated model performance on the test set</li>
-<li>Used MSE criteria for model evaluation</li>
-<li>Linear model did not perform well as the relationship is not linear.</li>
+<li>Fitted different models (linear and tree-based) on the training set and evaluated model performance on the test set</li>
+<li>Used mean squared error (MSE) criteria for model evaluation</li>
+<li>Linear models did not perform as well as the tree based models</li>
 <li>Tree based ensemble model (RandomForest and Gradient Boosting Model) showed similar performance with GBM performing slightly better.</li>
-<li>GBM model was further tuned using Randomized Search Cross Validation technique to optimize hyper-parameters.</li>
 </ul>
 </section>
-<section id="model-performance" class="level2">
-<h2>Model Performance</h2>
-<p><img src="../img/compare.png" width="20" height="380" class="left"> <img src="../img/result.png" width="20" height="380" class="right"></p>
+<section id="results" class="level2">
+<h2>Results</h2>
+<hr />
+<p><img src="../img/compare.png" height="400" class="left"> <img src="../img/result.png" width="" height="400" class="right"></p>
+<ul>
+<li>Out of box GBM model was further tuned using Randomized Search Cross Validation technique to optimize hyper-parameters.</li>
+</ul>
 <hr />
 </section>
-<section id="model-performance-1" class="level2">
-<h2>Model Performance</h2>
-<p><img src="../img/residual.png" width="20" height="380"></p>
+<section id="results-contd.." class="level2">
+<h2>Results (contd..)</h2>
+<hr />
+<p><img src="../img/residual.png" width="400" height="380"></p>
+<ul>
+<li>The final model has coefficient of determination (<span class="math inline">\(R^{2}\)</span>) of 0.8 meaning that the 80% of the observation variation is explained by the model.</li>
+</ul>
 </section>
 </section>
 <section id="section-6" class="level1">
 <h1></h1>
 <section id="model-deployment" class="level2">
 <h2>Model Deployment</h2>
+<hr />
 <ul>
-<li>Picklized the final model and wrote a flask application deployed as an heroku app.</li>
-<li><a href="https://chi-apt-rental-app.herokuapp.com">Deployed Model in Heroku</a></li>
+<li>Picklized the final gbm model and wrote a flask application to deploy as an heroku app.</li>
+<li><a href="https://chi-apt-rental-app.herokuapp.com">Deployed model in Heroku</a></li>
+</ul>
+</section>
+</section>
+<section id="section-7" class="level1">
+<h1></h1>
+<section id="summary" class="level2">
+<h2>Summary</h2>
+<ul>
+<li>Developed end-to-end project (data collection, cleaning/wrangling, modeling, model deployment) to model apartment rental price in Chicago using craigslist data</li>
+<li>Other Data Science Projects:
+<ul>
+<li>Modeling Restaurant Inspection in the city of Chicago</li>
+<li>Exploratory data analysis to study the efficacy of Supplemental instruction (SI) methods in the physics department in an US University.</li>
+</ul></li>
 </ul>
 </section>
 </section>
