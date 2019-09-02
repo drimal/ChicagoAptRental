@@ -242,6 +242,5 @@ def get_distance_from_union_station(lon2, lat2):
 ## Summary
 
 - Developed end-to-end project (data collection, cleaning/wrangling, modeling, model deployment) to model apartment rental price in Chicago using craigslist data
-- Other Data Science Projects:
-    - Modeling Restaurant Inspection in the city of Chicago
-    - Exploratory data analysis to study the efficacy of Supplemental instruction (SI) methods in the physics department in an US University.
+- Other Data Science Project:
+    - [Modeling Restaurant Inspection in the city of Chicago](https://github.com/drimal/chicagofood)
