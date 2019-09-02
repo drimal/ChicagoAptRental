@@ -15,3 +15,7 @@ pandoc -t html5 --template=template/template-revealjs.html \
 --variable speed=$speed \
 --variable highlight-style=$hs \
 markdown/$talk'.md' -o html/$talk'.html'
+
+git add .
+git commit -m 'updates'
+git push
