@@ -25,14 +25,16 @@
 
 ## Data Collection
 
-<img src="../img/craiglist.png" width="400" class="left">
+<img src="../img/craiglist.png" width="350" class="left">
 <div class="right">
 
 - Source: [Chicago craigslist](https://chicago.craigslist.org/search/chc/apa?)
 - Used Scrapy and wrote a spider to crawl through craigslist pages [see scraping project](https://github.com/drimal/webscraping/tree/master/craiglistscraper)
 - Scraped over 5k listings over 2 day period in April 2019
 - Data pipelined to mongo db atlas for storage
+
 </div>
+
 ---
 
 ## Example Code
@@ -83,7 +85,7 @@ def parse_from_item_detail_page(self, response):
 
 ## Data Preprocessing
 
-<img src="../img/head.png" width="350" class="left">
+<img src="../img/head.png" width="300" class="left">
 
 <div class="right">
 
@@ -97,6 +99,7 @@ def parse_from_item_detail_page(self, response):
 
     -Dealing with extreme outliers
 </div>
+
 ---
 
 ## Missing Values
