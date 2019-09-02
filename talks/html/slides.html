@@ -100,44 +100,69 @@
 <section id="example-code" class="level2">
 <h2>Example Code</h2>
 <hr />
-<pre><code>def parse(self, response):
-    # Get listings from the response
-    postings = response.xpath(&quot;.//p&quot;)
+<pre><code># -*- coding: utf-8 -*-
+import scrapy
+from craiglistscraper.items import craiglistscraperItem
 
-    for i in range(len(postings)):
-        item = craiglistscraperItem()
-        item[&#39;postid&#39;] = int(&quot;&quot;.join(postings[i].xpath(&quot;.//@data-id&quot;).extract()))
-        item[&#39;title&#39;] = &quot;&quot;.join(postings[i].xpath(&quot;.//*[@class=&#39;result-title hdrlnk&#39;]/text()&quot;).extract())
-        item[&#39;neighborhood&#39;] = &quot;&quot;.join(postings[i].xpath(&quot;.//span[@class=&#39;result-meta&#39;]/span[@class=&#39;result-hood&#39;]/text()&quot;).extract())
-        item[&#39;postdate&#39;] = &quot;&quot;.join(postings[i].xpath(&quot;.//*[@class=&#39;result-date&#39;]/text()&quot;).extract())
-        item[&#39;link&#39;] = &quot;&quot;.join(postings[i].xpath(&quot;.//*[contains(@class, &#39;result-title hdrlnk&#39;)]/@href&quot;).extract())
-        price = &quot;&quot;.join(postings[i].xpath(&quot;.//span[@class=&#39;result-meta&#39;]/span[@class=&#39;result-price&#39;]/text()&quot;).extract()).replace(&#39;$&#39;, &#39;&#39;)
-        item[&#39;price&#39;] = float(price)
-        # parsing response to follow the posting link for more detailed information
-        follow = item[&#39;link&#39;]
 
-        request = scrapy.Request(follow, callback=self.parse_from_item_detail_page)
-        request.meta[&#39;item&#39;] = item
-        yield request
+class CraiglistscraperSpider(scrapy.Spider):
+    name = &#39;craiglistscrapper&#39;
+    allowed_domains = [&#39;craigslist.org&#39;]
+    #base_url = &#39;https://chicago.craigslist.org/search/see/apa?&#39;
+    base_url = &#39;https://chicago.craigslist.org/search/apa?&#39;
+    start_urls = []
 
-def parse_from_item_detail_page(self, response):
-    item = response.meta[&#39;item&#39;]
-    latparser = response.xpath(&quot;//div[contains(@id,&#39;map&#39;)]&quot;)
-    item[&#39;latitude&#39;] = &#39;&#39;.join(latparser.xpath(&quot;@data-latitude&quot;).extract())
-    item[&#39;longitude&#39;] = &#39;&#39;.join(latparser.xpath(&quot;@data-longitude&quot;).extract())
+    for page in range(0, 20):
+        start_urls.append(base_url + &#39;s=&#39; + str(120 * page))
 
-    #extract attributes of the listing
-    attr = response.xpath(&quot;//p[@class=&#39;attrgroup&#39;]&quot;)
-    attributes = attr.xpath(&quot;span/b/text()&quot;).extract()
-    try:
-        item[&#39;beds&#39;] = float(attributes[0].replace(&#39;BR&#39;, &#39;&#39;))
-        item[&#39;baths&#39;] = float(attributes[1].replace(&#39;Ba&#39;, &#39;&#39;))
-        item[&#39;area&#39;] = float(attributes[2])
-        item[&#39;others&#39;] = attr.xpath(&quot;span/text()&quot;).extract()[2:]
-    except:
-        pass
-    return item
-</code></pre>
+    def parse(self, response):
+        # Get listings from the response
+        postings = response.xpath(&quot;.//p&quot;)
+
+        for i in range(len(postings)):
+            item = craiglistscraperItem()
+            item[&#39;postid&#39;] = int(&quot;&quot;.join(
+                postings[i].xpath(&quot;.//@data-id&quot;).extract()))
+            item[&#39;title&#39;] = &quot;&quot;.join(postings[i].xpath(
+                &quot;.//*[@class=&#39;result-title hdrlnk&#39;]/text()&quot;).extract())
+            item[&#39;neighborhood&#39;] = &quot;&quot;.join(postings[i].xpath(
+                &quot;.//span[@class=&#39;result-meta&#39;]/span[@class=&#39;result-hood&#39;]/text()&quot;
+            ).extract())
+            item[&#39;postdate&#39;] = &quot;&quot;.join(postings[i].xpath(
+                &quot;.//*[@class=&#39;result-date&#39;]/text()&quot;).extract())
+            item[&#39;link&#39;] = &quot;&quot;.join(postings[i].xpath(
+                &quot;.//*[contains(@class, &#39;result-title hdrlnk&#39;)]/@href&quot;).extract(
+                ))
+            price = &quot;&quot;.join(postings[i].xpath(
+                &quot;.//span[@class=&#39;result-meta&#39;]/span[@class=&#39;result-price&#39;]/text()&quot;
+            ).extract()).replace(&#39;$&#39;, &#39;&#39;)
+            item[&#39;price&#39;] = float(price)
+            # parsing response to follow the posting link for more detailed information
+            follow = item[&#39;link&#39;]
+
+            request = scrapy.Request(follow,
+                                     callback=self.parse_from_item_detail_page)
+            request.meta[&#39;item&#39;] = item
+            yield request
+
+    def parse_from_item_detail_page(self, response):
+        item = response.meta[&#39;item&#39;]
+        latparser = response.xpath(&quot;//div[contains(@id,&#39;map&#39;)]&quot;)
+        item[&#39;latitude&#39;] = &#39;&#39;.join(latparser.xpath(&quot;@data-latitude&quot;).extract())
+        item[&#39;longitude&#39;] = &#39;&#39;.join(
+            latparser.xpath(&quot;@data-longitude&quot;).extract())
+
+        #extract attributes of the listing
+        attr = response.xpath(&quot;//p[@class=&#39;attrgroup&#39;]&quot;)
+        attributes = attr.xpath(&quot;span/b/text()&quot;).extract()
+        try:
+            item[&#39;beds&#39;] = float(attributes[0].replace(&#39;BR&#39;, &#39;&#39;))
+            item[&#39;baths&#39;] = float(attributes[1].replace(&#39;Ba&#39;, &#39;&#39;))
+            item[&#39;area&#39;] = float(attributes[2])
+            item[&#39;others&#39;] = attr.xpath(&quot;span/text()&quot;).extract()[2:]
+        except:
+            pass
+        return item</code></pre>
 </section>
 </section>
 <section id="section-2" class="level1">
