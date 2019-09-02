@@ -83,7 +83,8 @@ def parse_from_item_detail_page(self, response):
 
 ## Data Preprocessing
 
-<img src="../img/head.png" width="400" class="left">
+<img src="../img/head.png" class="left">
+
 <div class="right">
 
 - The scraped data requires some cleaning/preprocessing:
