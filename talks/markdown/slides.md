@@ -212,10 +212,48 @@ def get_distance_from_union_station(lon2, lat2):
 
 ---
 
+<div class='left'>
 - beds
 - baths
 - one-hot-encoded neighborhoods
-- Also explored other features like number of train/bus stations and other amenities around the neighborhood using locationiq.com api but the improvement was minimal 
+- Explored other features like number of train/bus stations and other amenities around the neighborhood using locationiq.com api but the improvement was minimal so these didnot get into the final model.
+
+</div>
+<div class='right'>
+```
+import requests
+import time
+private_token = os.getenv('PRIVATE_TOKEN')
+
+
+def location_api(df, amenity, radius, apikey):
+    amenity_count = []
+    for i in range(len(df)):
+        count = 0
+        #print(df[i], df['longitude'][i])
+        url = 'https://us1.locationiq.com/v1/nearby.php?key=' + apikey + '&lat=' + str(
+            df['latitude'][i]) + '&lon=' + str(
+                df['longitude']
+                [i]) + '&tag=' + amenity + '&radius=' + radius + '&format=json'
+        r = requests.get(url)
+        data = r.json()
+        if 'error' in data:
+            amenity_count.append(0)
+            print(data)
+            time.sleep(1)
+        else:
+            count = len(data)
+            #print(count)
+            #print(i)
+            amenity_count.append(count)
+            time.sleep(1)
+
+    df[amenity + '_count'] = amenity_count
+    #df[amenity+'wide_count'] = amenity_count
+
+    return df
+```
+</div>
 
 ## Results
 

@@ -254,12 +254,47 @@ def parse_from_item_detail_page(self, response):
 <section id="features-in-the-final-model" class="level2">
 <h2>Features in the final model</h2>
 <hr />
+<div class="left">
 <ul>
 <li>beds</li>
 <li>baths</li>
 <li>one-hot-encoded neighborhoods</li>
-<li>Also explored other features like number of train/bus stations and other amenities around the neighborhood using locationiq.com api but the improvement was minimal</li>
+<li>Explored other features like number of train/bus stations and other amenities around the neighborhood using locationiq.com api but the improvement was minimal so these didnot get into the final model.</li>
 </ul>
+</div>
+<div class="right">
+<pre><code>import requests
+import time
+private_token = os.getenv(&#39;PRIVATE_TOKEN&#39;)
+
+
+def location_api(df, amenity, radius, apikey):
+    amenity_count = []
+    for i in range(len(df)):
+        count = 0
+        #print(df[i], df[&#39;longitude&#39;][i])
+        url = &#39;https://us1.locationiq.com/v1/nearby.php?key=&#39; + apikey + &#39;&amp;lat=&#39; + str(
+            df[&#39;latitude&#39;][i]) + &#39;&amp;lon=&#39; + str(
+                df[&#39;longitude&#39;]
+                [i]) + &#39;&amp;tag=&#39; + amenity + &#39;&amp;radius=&#39; + radius + &#39;&amp;format=json&#39;
+        r = requests.get(url)
+        data = r.json()
+        if &#39;error&#39; in data:
+            amenity_count.append(0)
+            print(data)
+            time.sleep(1)
+        else:
+            count = len(data)
+            #print(count)
+            #print(i)
+            amenity_count.append(count)
+            time.sleep(1)
+
+    df[amenity + &#39;_count&#39;] = amenity_count
+    #df[amenity+&#39;wide_count&#39;] = amenity_count
+
+    return df</code></pre>
+</div>
 </section>
 <section id="results" class="level2">
 <h2>Results</h2>
