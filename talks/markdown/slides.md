@@ -124,8 +124,8 @@ def parse_from_item_detail_page(self, response):
 
 ## Exploratory Analysis
 
-<img src="../img/heatmap.png" width="25" height="380" class="left">
-<img src="../img/price_distributions.png" width="25" height="380" class="right">
+<img src="../img/heatmap.png" class="left">
+<img src="../img/price_distributions.png" class="right">
 
 - The price is not normally distributed, is skewed to the right.
 
@@ -135,8 +135,8 @@ def parse_from_item_detail_page(self, response):
 
 ## Exploratory Analysis
 
-<img src="../img/log_transformed_price.png" width="20" height="380" class="left">
-<img src="../img/beds_vs_price.png" width="20" height="380" class="right">
+<img src="../img/log_transformed_price.png" class="left">
+<img src="../img/beds_vs_price.png" class="right">
 - Log-transformed price is normally distributed.
 
 ---
