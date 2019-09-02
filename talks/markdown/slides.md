@@ -136,7 +136,9 @@ def parse_from_item_detail_page(self, response):
 ## Exploratory Analysis
 
 <img src="../img/log_transformed_price.png" class="left">
+
 <img src="../img/beds_vs_price.png" class="right">
+
 - Log-transformed price is normally distributed.
 
 ---
