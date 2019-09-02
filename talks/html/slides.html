@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+
+  <title>Apartment Rental Price in Chicago Using Craigslist Listings</title>
+
+  <meta name="description" content="Apartment Rental Price in Chicago Using Craigslist Listings">
+
+   <meta name="author" content="D. Rimal" /> 
+
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <link rel="stylesheet" href="../reveal.js/css/reveal.css">
+
+      <link rel="stylesheet" href="../reveal.js/css/theme/white.css" id="theme">
+  
+      <link rel="stylesheet" href="../template/monokai_mod.css">
+  
+  <link rel="stylesheet" href="../template/extra.css">
+
+  <script>
+    document.write('<link rel="stylesheet" href="../reveal.js/css/print/' +
+      (window.location.search.match(/print-pdf/gi) ? 'pdf' : 'paper') +
+      '.css" type="text/css" media="print">');
+  </script>
+
+  <script src="../template/snap.svg-min.js"></script>
+  <script src="../template/plotly-latest.min.js"></script>
+
+  <!--[if lt IE 9]>
+  <script src="../reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+
+  
+
+</head>
+
+<body>
+
+  
+
+  <div class="reveal">
+
+    <div class="slides">
+
+      <section>
+        <h1>Apartment Rental Price in Chicago Using Craigslist Listings</h1>
+         <h3>D. Rimal</h3> 
+        <p>
+          <h4></h4>
+        </p>
+      </section>
+
+       <section id="outline" class="level2">
+<h2>Outline</h2>
+<ul>
+<li><a href="#motivation">Motivation</a></li>
+<li><a href="#data-collection">Data Collection</a></li>
+<li><a href="#data-processing">Data Processing</a></li>
+<li><a href="#exploratory_analysis">Exploratory Analysis</a></li>
+<li><a href="#modeling">Modeling</a></li>
+<li><a href="#model-deployment">Model Deployment</a></li>
+<li><a href="#summary">Summary</a></li>
+</ul>
+</section>
+<section id="section" class="level1">
+<h1></h1>
+<section id="motivation" class="level2">
+<h2>Motivation</h2>
+<hr />
+<ul>
+<li>Goal: Develop end-to-end data science project to model apartment rental price in Chicago within the city limit using craigslist data.</li>
+<li>End product: A flask application to predict rental price for some user chosen criteria</li>
+</ul>
+</section>
+</section>
+<section id="section-1" class="level1">
+<h1></h1>
+<section id="data-collection" class="level2">
+<h2>Data Collection</h2>
+<img src="../img/craiglist.png" width="400" class="left">
+<div class="right">
+<ul>
+<li>Source: <a href="https://chicago.craigslist.org/search/chc/apa?">Chicago craigslist</a></li>
+<li>Used Scrapy and wrote a spider to crawl through craigslist pages <a href="https://github.com/drimal/webscraping/tree/master/craiglistscraper">see scraping project</a></li>
+<li>Scraped over 5k listings over 2 day period in April 2019</li>
+<li>Data pipelined to mongo db atlas for storage</li>
+</ul>
+</div>
+<hr />
+</section>
+<section id="example-code" class="level2">
+<h2>Example Code</h2>
+<pre><code>def parse(self, response):
+    # Get listings from the response
+    postings = response.xpath(&quot;.//p&quot;)
+
+    for i in range(len(postings)):
+        item = craiglistscraperItem()
+        item[&#39;postid&#39;] = int(&quot;&quot;.join(postings[i].xpath(&quot;.//@data-id&quot;).extract()))
+        item[&#39;title&#39;] = &quot;&quot;.join(postings[i].xpath(&quot;.//*[@class=&#39;result-title hdrlnk&#39;]/text()&quot;).extract())
+        item[&#39;neighborhood&#39;] = &quot;&quot;.join(postings[i].xpath(&quot;.//span[@class=&#39;result-meta&#39;]/span[@class=&#39;result-hood&#39;]/text()&quot;).extract())
+        item[&#39;postdate&#39;] = &quot;&quot;.join(postings[i].xpath(&quot;.//*[@class=&#39;result-date&#39;]/text()&quot;).extract())
+        item[&#39;link&#39;] = &quot;&quot;.join(postings[i].xpath(&quot;.//*[contains(@class, &#39;result-title hdrlnk&#39;)]/@href&quot;).extract())
+        price = &quot;&quot;.join(postings[i].xpath(&quot;.//span[@class=&#39;result-meta&#39;]/span[@class=&#39;result-price&#39;]/text()&quot;).extract()).replace(&#39;$&#39;, &#39;&#39;)
+        item[&#39;price&#39;] = float(price)
+        # parsing response to follow the posting link for more detailed information
+        follow = item[&#39;link&#39;]
+
+        request = scrapy.Request(follow, callback=self.parse_from_item_detail_page)
+        request.meta[&#39;item&#39;] = item
+        yield request
+
+def parse_from_item_detail_page(self, response):
+    item = response.meta[&#39;item&#39;]
+    latparser = response.xpath(&quot;//div[contains(@id,&#39;map&#39;)]&quot;)
+    item[&#39;latitude&#39;] = &#39;&#39;.join(latparser.xpath(&quot;@data-latitude&quot;).extract())
+    item[&#39;longitude&#39;] = &#39;&#39;.join(latparser.xpath(&quot;@data-longitude&quot;).extract())
+
+    #extract attributes of the listing
+    attr = response.xpath(&quot;//p[@class=&#39;attrgroup&#39;]&quot;)
+    attributes = attr.xpath(&quot;span/b/text()&quot;).extract()
+    try:
+        item[&#39;beds&#39;] = float(attributes[0].replace(&#39;BR&#39;, &#39;&#39;))
+        item[&#39;baths&#39;] = float(attributes[1].replace(&#39;Ba&#39;, &#39;&#39;))
+        item[&#39;area&#39;] = float(attributes[2])
+        item[&#39;others&#39;] = attr.xpath(&quot;span/text()&quot;).extract()[2:]
+    except:
+        pass
+    return item
+</code></pre>
+<hr />
+</section>
+</section>
+<section id="section-2" class="level1">
+<h1></h1>
+<section id="data-preprocessing" class="level2">
+<h2>Data Preprocessing</h2>
+<img src="../img/head.png" width="400" class="left">
+<div class="right">
+<ul>
+<li><p>The scraped data requires some cleaning/preprocessing:</p>
+<p>-removing duplicate entries</p>
+<p>-Dealing with missing values</p>
+<p>-type conversion when necessary</p>
+-Dealing with extreme outliers</li>
+</ul>
+</div>
+<hr />
+</section>
+<section id="missing-values" class="level2">
+<h2>Missing Values</h2>
+<img src="../img/missing_info.png" width="400" class="left">
+<div class="right">
+<ul>
+<li>Missing values in each column.</li>
+<li>Many properties do not list area/neighborhood.</li>
+<li>The other information is not very helpful. This column was not used.</li>
+<li>Reconstructed neighborhood from latitude/longitude</li>
+<li>Filled missing beds/baths with median values.</li>
+</ul>
+</div>
+<hr />
+</section>
+<section id="outliers" class="level2">
+<h2>Outliers</h2>
+<p><img src="../img/beds.png" width="100" class="left"> <img src="../img/extremes.png" width="150" class="right"></p>
+<ul>
+<li>examples: way too many beds, extreme prices etc.</li>
+</ul>
+<hr />
+</section>
+</section>
+<section id="section-3" class="level1">
+<h1></h1>
+<section id="exploratory-analysis" class="level2">
+<h2>Exploratory Analysis</h2>
+<p><img src="../img/heatmap.png" width="25" height="380" class="left"> <img src="../img/price_distributions.png" width="25" height="380" class="right"></p>
+<ul>
+<li><p>The price is not normally distributed, is skewed to the right.</p></li>
+<li><p>Linear model is not be good option, can try to log-transform the price.</p></li>
+</ul>
+<hr />
+</section>
+<section id="exploratory-analysis-1" class="level2">
+<h2>Exploratory Analysis</h2>
+<p><img src="../img/log_transformed_price.png" width="20" height="380" class="left"> <img src="../img/beds_vs_price.png" width="20" height="380" class="right"> - Log-transformed price is normally distributed.</p>
+<hr />
+</section>
+</section>
+<section id="section-4" class="level1">
+<h1></h1>
+<section id="feature-engineering" class="level2">
+<h2>Feature Engineering</h2>
+<img src="../img/distance_from_us.png"  class="left">
+<div class="right">
+<ul>
+<li>Distance from the city center (Union Station)</li>
+</ul>
+<pre><code>def get_distance_from_union_station(lon2, lat2):
+    # convert decimal degrees to radians
+    lon1 = -87.6403 ## Union Station Coordinates
+    lat1 = 41.8787
+    lon1, lat1, lon2, lat2 = map(np.deg2rad, [lon1, lat1, lon2, lat2])
+    # haversine formula
+    dlon = lon2 - lon1
+    dlat = lat2 - lat1
+    a = np.sin(dlat / 2)**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon / 2)**2
+    c = 2 * np.arcsin(np.sqrt(a))
+    r = 3956  # Radius of earth in miles
+    return c * r</code></pre>
+</div>
+<ul>
+<li>Transform latitude, longitude to neighborhoods, use one-hot-encoded neighborhood as the model Feature.</li>
+</ul>
+<hr />
+</section>
+<section id="correlation-matrix" class="level2">
+<h2>Correlation Matrix</h2>
+<img src="../img/correlation_matrix.png"  height="400" class="left">
+<div class="right">
+<ul>
+<li>The price is anti-correlated with the distance from the union station and correlated with beds/baths</li>
+<li>The latitude/longitude gets encoded into neighborhoods, I did not use them in the final model.</li>
+</ul>
+</div>
+<hr />
+</section>
+</section>
+<section id="section-5" class="level1">
+<h1></h1>
+<section id="modeling" class="level2">
+<h2>Modeling</h2>
+<ul>
+<li>Randomly split data into training and testing sample (70/30 split)</li>
+<li>Fitted couple different models on the training set and evaluated model performance on the test set</li>
+<li>Used MSE criteria for model evaluation</li>
+<li>Linear model did not perform well as the relationship is not linear.</li>
+<li>Tree based ensemble model (RandomForest and Gradient Boosting Model) showed similar performance with GBM performing slightly better.</li>
+<li>GBM model was further tuned using Randomized Search Cross Validation technique to optimize hyper-parameters.</li>
+</ul>
+</section>
+<section id="model-performance" class="level2">
+<h2>Model Performance</h2>
+<p><img src="../img/compare.png" width="20" height="380" class="left"> <img src="../img/result.png" width="20" height="380" class="right"></p>
+<hr />
+</section>
+<section id="model-performance-1" class="level2">
+<h2>Model Performance</h2>
+<p><img src="../img/residual.png" width="20" height="380"></p>
+</section>
+</section>
+<section id="section-6" class="level1">
+<h1></h1>
+<section id="model-deployment" class="level2">
+<h2>Model Deployment</h2>
+<ul>
+<li>Picklized the final model and wrote a flask application deployed as an heroku app</li>
+<li><a href="https://chi-apt-rental-app.herokuapp.com">Deployed Model in Heroku</a></li>
+</ul>
+</section>
+</section>
+    </div>
+
+    <script src="../reveal.js/lib/js/head.min.js"></script>
+    <script src="../reveal.js/js/reveal.js"></script>
+
+    <script>
+
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        center: true,
+        slideNumber: true,
+        width: 1280,
+        height: 720,
+
+                  theme: Reveal.getQueryHash().theme || 'white',
+        
+                  transition: Reveal.getQueryHash().transition || 'convex',
+        
+                  transitionSpeed: Reveal.getQueryHash().transitionSpeed || 'fast',
+        
+        dependencies: [{
+            src: '../reveal.js/lib/js/classList.js',
+            condition: function() {
+              return !document.body.classList;
+            }
+          }, {
+            src: '../reveal.js/plugin/markdown/showdown.js',
+            condition: function() {
+              return !!document.querySelector('[data-markdown]');
+            }
+          }, {
+            src: '../reveal.js/plugin/markdown/markdown.js',
+            condition: function() {
+              return !!document.querySelector('[data-markdown]');
+            }
+          }, {
+            src: '../reveal.js/plugin/highlight/highlight.js',
+            async: true,
+            callback: function() {
+              hljs.initHighlightingOnLoad();
+            }
+          }, {
+            src: '../reveal.js/plugin/zoom-js/zoom.js',
+            async: true,
+            condition: function() {
+              return !!document.body.classList;
+            }
+          }, {
+            src: '../reveal.js/plugin/notes/notes.js',
+            async: true,
+            condition: function() {
+              return !!document.body.classList;
+            }
+          }, {
+            src: '../reveal.js/plugin/math/math.js',
+            async: true,
+            condition: function() {
+              return !!document.body.classList;
+            }
+          },
+          // { src: 'reveal.js/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+    </script>
+
+    <script>
+    // displayed upon load, hides when slide changes
+      Reveal.addEventListener('slidechanged', function(event) {
+        document.querySelector('.reveal .footer').style.display = 'none';
+      });
+   </script>
+
+</body>
+
+</html>
