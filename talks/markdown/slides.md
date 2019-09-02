@@ -124,8 +124,8 @@ def parse_from_item_detail_page(self, response):
 
 ## Exploratory Analysis
 
-<img src="../img/heatmap.png" width="600"  height="600" class="left">
-<img src="../img/price_distributions.png" class="right">
+<img src="../img/heatmap.png" width="300"  height="300" class="left">
+<img src="../img/price_distributions.png" width="300"  height="300" class="right">
 
 - The price is not normally distributed, is skewed to the right.
 
