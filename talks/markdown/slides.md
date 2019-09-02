@@ -129,7 +129,7 @@ def parse_from_item_detail_page(self, response):
 
 - The price is not normally distributed, is skewed to the right.
 
-- Linear model is not be good option, can try to log-transform the price.
+- Linear model is not a good option, can try to log-transform the price.
 
 ---
 
