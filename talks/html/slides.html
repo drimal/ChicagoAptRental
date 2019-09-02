@@ -251,6 +251,16 @@ def parse_from_item_detail_page(self, response):
 <li>Tree based ensemble model (RandomForest and Gradient Boosting Model) showed similar performance with GBM performing slightly better.</li>
 </ul>
 </section>
+<section id="features-in-the-final-model" class="level2">
+<h2>Features in the final model</h2>
+<hr />
+<ul>
+<li>beds</li>
+<li>baths</li>
+<li>one-hot-encoded neighborhoods</li>
+<li>Also explored other features like number of train/bus stations and other amenities around the neighborhood using locationiq.com api but the improvement was minimal</li>
+</ul>
+</section>
 <section id="results" class="level2">
 <h2>Results</h2>
 <hr />
@@ -285,7 +295,7 @@ def parse_from_item_detail_page(self, response):
 <section id="summary" class="level2">
 <h2>Summary</h2>
 <ul>
-<li>Developed end-to-end project (data collection, cleaning/wrangling, modeling, model deployment) to model apartment rental price in Chicago using craigslist data</li>
+<li><p>Developed end-to-end project (data collection, cleaning/wrangling, modeling, model deployment) to model apartment rental price in Chicago using craigslist data</p></li>
 <li>Other Data Science Project:
 <ul>
 <li><a href="https://github.com/drimal/chicagofood">Modeling Restaurant Inspection in the city of Chicago</a></li>

@@ -208,6 +208,15 @@ def get_distance_from_union_station(lon2, lat2):
 - Linear models did not perform as well as the tree based models
 - Tree based ensemble model (RandomForest and Gradient Boosting Model) showed similar performance with GBM performing slightly better.
 
+## Features in the final model
+
+---
+
+- beds
+- baths
+- one-hot-encoded neighborhoods
+- Also explored other features like number of train/bus stations and other amenities around the neighborhood using locationiq.com api but the improvement was minimal 
+
 ## Results
 
 ---
@@ -242,5 +251,6 @@ def get_distance_from_union_station(lon2, lat2):
 ## Summary
 
 - Developed end-to-end project (data collection, cleaning/wrangling, modeling, model deployment) to model apartment rental price in Chicago using craigslist data
+
 - Other Data Science Project:
     - [Modeling Restaurant Inspection in the city of Chicago](https://github.com/drimal/chicagofood)
