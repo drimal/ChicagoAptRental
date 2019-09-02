@@ -40,6 +40,7 @@
 ## Example Code
 
 ```
+
 def parse(self, response):
     # Get listings from the response
     postings = response.xpath(".//p")
@@ -77,8 +78,8 @@ def parse_from_item_detail_page(self, response):
     except:
         pass
     return item
-
 ```
+
 ---
 
 #

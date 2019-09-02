@@ -97,7 +97,8 @@
 </section>
 <section id="example-code" class="level2">
 <h2>Example Code</h2>
-<pre><code>def parse(self, response):
+<pre><code>
+def parse(self, response):
     # Get listings from the response
     postings = response.xpath(&quot;.//p&quot;)
 
@@ -133,8 +134,7 @@ def parse_from_item_detail_page(self, response):
         item[&#39;others&#39;] = attr.xpath(&quot;span/text()&quot;).extract()[2:]
     except:
         pass
-    return item
-</code></pre>
+    return item</code></pre>
 <hr />
 </section>
 </section>
