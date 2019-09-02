@@ -83,7 +83,7 @@ def parse_from_item_detail_page(self, response):
 
 ## Data Preprocessing
 
-<img src="../img/head.png" class="left">
+<img src="../img/head.png" width="350" class="left">
 
 <div class="right">
 
