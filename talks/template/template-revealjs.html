@@ -16,30 +16,30 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-  <link rel="stylesheet" href="../reveal.js/css/reveal.css">
+  <link rel="stylesheet" href="../../reveal.js/css/reveal.css">
 
   $if(theme)$
-    <link rel="stylesheet" href="../reveal.js/css/theme/$theme$.css" id="theme">
+    <link rel="stylesheet" href="../../reveal.js/css/theme/$theme$.css" id="theme">
   $else$
-    <link rel="stylesheet" href="../reveal.js/css/theme/black.css" id="theme">
+    <link rel="stylesheet" href="../../reveal.js/css/theme/black.css" id="theme">
   $endif$
 
   $if(highlight-style)$
-    <link rel="stylesheet" href="../template/$highlight-style$.css">
+    <link rel="stylesheet" href="../../template/$highlight-style$.css">
   $else$
-    <link rel="stylesheet" href="../reveal.js/lib/css/zenburn.css">
+    <link rel="stylesheet" href="../../reveal.js/lib/css/zenburn.css">
   $endif$
 
-  <link rel="stylesheet" href="../template/extra.css">
+  <link rel="stylesheet" href="../../template/extra.css">
 
   <script>
-    document.write('<link rel="stylesheet" href="../reveal.js/css/print/' +
+    document.write('<link rel="stylesheet" href="../../reveal.js/css/print/' +
       (window.location.search.match(/print-pdf/gi) ? 'pdf' : 'paper') +
       '.css" type="text/css" media="print">');
   </script>
 
-  <script src="../template/snap.svg-min.js"></script>
-  <script src="../template/plotly-latest.min.js"></script>
+  <script src="../../template/snap.svg-min.js"></script>
+  <script src="../../template/plotly-latest.min.js"></script>
 
   <!--[if lt IE 9]>
   <script src="../reveal.js/lib/js/html5shiv.js"></script>
@@ -75,8 +75,8 @@
       $endif$ $body$
     </div>
 
-    <script src="../reveal.js/lib/js/head.min.js"></script>
-    <script src="../reveal.js/js/reveal.js"></script>
+    <script src="../../reveal.js/lib/js/head.min.js"></script>
+    <script src="../../reveal.js/js/reveal.js"></script>
 
     <script>
 
@@ -107,40 +107,40 @@
         $endif$
 
         dependencies: [{
-            src: '../reveal.js/lib/js/classList.js',
+            src: '../../reveal.js/lib/js/classList.js',
             condition: function() {
               return !document.body.classList;
             }
           }, {
-            src: '../reveal.js/plugin/markdown/showdown.js',
+            src: '../../reveal.js/plugin/markdown/showdown.js',
             condition: function() {
               return !!document.querySelector('[data-markdown]');
             }
           }, {
-            src: '../reveal.js/plugin/markdown/markdown.js',
+            src: '../../reveal.js/plugin/markdown/markdown.js',
             condition: function() {
               return !!document.querySelector('[data-markdown]');
             }
           }, {
-            src: '../reveal.js/plugin/highlight/highlight.js',
+            src: '../../reveal.js/plugin/highlight/highlight.js',
             async: true,
             callback: function() {
               hljs.initHighlightingOnLoad();
             }
           }, {
-            src: '../reveal.js/plugin/zoom-js/zoom.js',
+            src: '../../reveal.js/plugin/zoom-js/zoom.js',
             async: true,
             condition: function() {
               return !!document.body.classList;
             }
           }, {
-            src: '../reveal.js/plugin/notes/notes.js',
+            src: '../../reveal.js/plugin/notes/notes.js',
             async: true,
             condition: function() {
               return !!document.body.classList;
             }
           }, {
-            src: '../reveal.js/plugin/math/math.js',
+            src: '../../reveal.js/plugin/math/math.js',
             async: true,
             condition: function() {
               return !!document.body.classList;
