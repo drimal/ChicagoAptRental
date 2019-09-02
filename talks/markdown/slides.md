@@ -40,7 +40,6 @@
 ## Example Code
 
 ```
-
 def parse(self, response):
     # Get listings from the response
     postings = response.xpath(".//p")
