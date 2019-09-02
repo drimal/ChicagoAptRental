@@ -13,7 +13,6 @@
 - [Model Deployment](#model-deployment)
 - [Summary](#summary)
 
-#
 
 ## Motivation
 
