@@ -113,8 +113,8 @@ def parse_from_item_detail_page(self, response):
 
 ## Outliers
 
-<img src="../img/beds.png" class="left">
-<img src="../img/extremes.png" class="right">
+<img src="../img/beds.png" width="400" class="left">
+<img src="../img/extremes.png" width="400" class="right">
 
 - examples: way too many beds, extreme prices etc.
 
