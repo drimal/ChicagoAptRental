@@ -170,11 +170,11 @@ class CraiglistscraperSpider(scrapy.Spider):
 <img src="../img/head.png" width="300" class="left">
 <div class="right">
 <ul>
-<li><p>The scraped data requires some cleaning/preprocessing:</p>
+<li>The scraped data requires some cleaning/preprocessing:
 <ul>
-<li><p>Removing duplicate entries</p></li>
-<li><p>Dealing with missing values</p></li>
-<li><p>Type conversion when necessary</p></li>
+<li>Removing duplicate entries</li>
+<li>Dealing with missing values</li>
+<li>Type conversion when necessary</li>
 <li>Dealing with extreme outliers</li>
 </ul></li>
 </ul>
@@ -199,7 +199,7 @@ class CraiglistscraperSpider(scrapy.Spider):
 <hr />
 <p><img src="../img/beds.png" width="380" class="left"> <img src="../img/extremes.png" width="400" class="right"></p>
 <ul>
-<li>examples: way too many beds, extreme prices (0-309900).</li>
+<li>Examples: way too many beds, extreme prices (0-$309900).</li>
 </ul>
 </section>
 </section>
@@ -210,8 +210,8 @@ class CraiglistscraperSpider(scrapy.Spider):
 <hr />
 <p><img src="../img/heatmap.png" width="280"  height="380" class="left"> <img src="../img/price_distributions.png" width="280" height="380" class="right"></p>
 <ul>
-<li><p>The price is not normally distributed, is skewed to the right.</p></li>
-<li><p>Linear model is not a good option, can try to log-transform the price.</p></li>
+<li>The price is not normally distributed, is skewed to the right.</li>
+<li>Linear model is not a good option, can try to log-transform the price.</li>
 </ul>
 </section>
 <section id="exploratory-analysis-1" class="level2">
@@ -231,7 +231,7 @@ class CraiglistscraperSpider(scrapy.Spider):
 <img src="../img/distance_from_us.png" class="left">
 <div class="right">
 <ul>
-<li>Distance from the city center (Union Station)</li>
+<li>Distance from the city center (Union Station in this case)</li>
 </ul>
 <pre><code>def get_distance_from_union_station(lon2, lat2):
     # convert decimal degrees to radians

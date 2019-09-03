@@ -120,13 +120,9 @@ class CraiglistscraperSpider(scrapy.Spider):
 <div class="right">
 
 - The scraped data requires some cleaning/preprocessing:
-
     - Removing duplicate entries
-
     - Dealing with missing values
-
     - Type conversion when necessary
-
     - Dealing with extreme outliers
 </div>
 
@@ -154,7 +150,7 @@ class CraiglistscraperSpider(scrapy.Spider):
 <img src="../img/beds.png" width="380" class="left">
 <img src="../img/extremes.png" width="400" class="right">
 
-- examples: way too many beds, extreme prices (0-309900).
+- Examples: way too many beds, extreme prices (0-$309900).
 
 #
 
@@ -166,7 +162,6 @@ class CraiglistscraperSpider(scrapy.Spider):
 <img src="../img/price_distributions.png" width="280" height="380" class="right">
 
 - The price is not normally distributed, is skewed to the right.
-
 - Linear model is not a good option, can try to log-transform the price.
 
 
@@ -188,7 +183,7 @@ class CraiglistscraperSpider(scrapy.Spider):
 
 <img src="../img/distance_from_us.png" class="left">
 <div class="right">
-- Distance from the city center (Union Station)
+- Distance from the city center (Union Station in this case)
 
 ```
 def get_distance_from_union_station(lon2, lat2):
