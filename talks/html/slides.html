@@ -74,7 +74,7 @@
 <h2>Motivation</h2>
 <hr />
 <ul>
-<li>Goal: Develop end-to-end data science project to model apartment rental price in Chicago within the city limit using craigslist data.</li>
+<li>Goal: Develop an end-to-end data science project to model apartment rental prices in Chicago within the city limits using craigslist data.</li>
 <li>End product: A flask application to predict rental price for some user chosen criteria</li>
 </ul>
 </section>
@@ -87,9 +87,9 @@
 <div class="right">
 <ul>
 <li>Source: <a href="https://chicago.craigslist.org/search/chc/apa?">Chicago craigslist</a></li>
-<li>Used Scrapy and wrote a spider to crawl through craigslist pages <a href="https://github.com/drimal/webscraping/tree/master/craiglistscraper">see scraping project</a></li>
-<li>Scraped over 5k listings over 2 day period in April 2019</li>
-<li>Data pipelined to mongo db atlas for storage</li>
+<li>Used Scrapy and wrote a spider to crawl through craigslist pages <a href="https://github.com/drimal/webscraping/tree/master/craiglistscraper">see scraping project</a>.</li>
+<li>Scraped over 5k listings covering a 2 day period in April 2019.</li>
+<li>Data pipelined to mongo db atlas for storage.</li>
 </ul>
 </div>
 <hr />
@@ -171,10 +171,12 @@ class CraiglistscraperSpider(scrapy.Spider):
 <div class="right">
 <ul>
 <li><p>The scraped data requires some cleaning/preprocessing:</p>
-<p>-removing duplicate entries</p>
-<p>-Dealing with missing values</p>
-<p>-type conversion when necessary</p>
--Dealing with extreme outliers</li>
+<ul>
+<li><p>Removing duplicate entries</p></li>
+<li><p>Dealing with missing values</p></li>
+<li><p>Type conversion when necessary</p></li>
+<li>Dealing with extreme outliers</li>
+</ul></li>
 </ul>
 </div>
 </section>
@@ -266,11 +268,11 @@ class CraiglistscraperSpider(scrapy.Spider):
 <h2>Modeling</h2>
 <hr />
 <ul>
-<li>Randomly split data into training and testing sample (70/30 split)</li>
+<li>Randomly split data into training and testing samples (70/30 split)</li>
 <li>Fitted different models (linear and tree-based) on the training set and evaluated model performance on the test set</li>
 <li>Used mean squared error (MSE) criteria for model evaluation</li>
 <li>Linear models did not perform as well as the tree based models</li>
-<li>Tree based ensemble model (RandomForest and Gradient Boosting Model) showed similar performance with GBM performing slightly better.</li>
+<li>Tree based ensemble models (RandomForest and Gradient Boosting Model) showed similar performance with GBM performing slightly better.</li>
 </ul>
 </section>
 <section id="features-in-the-final-model" class="level2">
@@ -281,7 +283,7 @@ class CraiglistscraperSpider(scrapy.Spider):
 <li>beds</li>
 <li>baths</li>
 <li>one-hot-encoded neighborhoods</li>
-<li>Explored other features like number of train/bus stations and other amenities around the neighborhood using locationiq.com api but the improvement was minimal so these didnot get into the final model.</li>
+<li>Explored other features like number of train/bus stations and other amenities around the neighborhood using locationiq.com api but the improvement was minimal so these did not get into the final model.</li>
 </ul>
 </div>
 <div class="right">
@@ -332,7 +334,7 @@ def location_api(df, amenity, radius, apikey):
 <hr />
 <p><img src="../img/residual.png" width="400" height="380"></p>
 <ul>
-<li>The final model has coefficient of determination (<span class="math inline">\(R^{2}\)</span>) of 0.8 meaning that the 80% of the observation variation is explained by the model.</li>
+<li>The final model has coefficient of determination (<span class="math inline">\(R^{2}\)</span>) of 0.8, meaning that the 80% of the observation variation is explained by the model.</li>
 </ul>
 </section>
 </section>
@@ -342,7 +344,7 @@ def location_api(df, amenity, radius, apikey):
 <h2>Model Deployment</h2>
 <hr />
 <ul>
-<li>Picklized the final gbm model and wrote a flask application to deploy as an heroku app.</li>
+<li>Picklized the final model and wrote a flask application to deploy as an heroku app.</li>
 <li><a href="https://chi-apt-rental-app.herokuapp.com">Deployed model in Heroku</a></li>
 </ul>
 </section>

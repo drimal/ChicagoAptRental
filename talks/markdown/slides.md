@@ -18,7 +18,7 @@
 
 ---
 
-- Goal: Develop end-to-end data science project to model apartment rental price in Chicago within the city limit using craigslist data.
+- Goal: Develop an end-to-end data science project to model apartment rental prices in Chicago within the city limits using craigslist data.
 - End product: A flask application to predict rental price for some user chosen criteria
 
 
@@ -32,9 +32,9 @@
 <div class="right">
 
 - Source: [Chicago craigslist](https://chicago.craigslist.org/search/chc/apa?)
-- Used Scrapy and wrote a spider to crawl through craigslist pages [see scraping project](https://github.com/drimal/webscraping/tree/master/craiglistscraper)
-- Scraped over 5k listings over 2 day period in April 2019
-- Data pipelined to mongo db atlas for storage
+- Used Scrapy and wrote a spider to crawl through craigslist pages [see scraping project](https://github.com/drimal/webscraping/tree/master/craiglistscraper).
+- Scraped over 5k listings covering a 2 day period in April 2019.
+- Data pipelined to mongo db atlas for storage.
 
 </div>
 
@@ -121,13 +121,13 @@ class CraiglistscraperSpider(scrapy.Spider):
 
 - The scraped data requires some cleaning/preprocessing:
 
-    -removing duplicate entries
+    - Removing duplicate entries
 
-    -Dealing with missing values
+    - Dealing with missing values
 
-    -type conversion when necessary
+    - Type conversion when necessary
 
-    -Dealing with extreme outliers
+    - Dealing with extreme outliers
 </div>
 
 
@@ -226,11 +226,11 @@ def get_distance_from_union_station(lon2, lat2):
 
 ---
 
-- Randomly split data into training and testing sample (70/30 split)
+- Randomly split data into training and testing samples (70/30 split)
 - Fitted different models (linear and tree-based) on the training set and evaluated model performance on the test set
 - Used mean squared error (MSE) criteria for model evaluation
 - Linear models did not perform as well as the tree based models
-- Tree based ensemble model (RandomForest and Gradient Boosting Model) showed similar performance with GBM performing slightly better.
+- Tree based ensemble models (RandomForest and Gradient Boosting Model) showed similar performance with GBM performing slightly better.
 
 ## Features in the final model
 
@@ -240,7 +240,7 @@ def get_distance_from_union_station(lon2, lat2):
 - beds
 - baths
 - one-hot-encoded neighborhoods
-- Explored other features like number of train/bus stations and other amenities around the neighborhood using locationiq.com api but the improvement was minimal so these didnot get into the final model.
+- Explored other features like number of train/bus stations and other amenities around the neighborhood using locationiq.com api but the improvement was minimal so these did not get into the final model.
 
 </div>
 <div class='right'>
@@ -296,7 +296,7 @@ def location_api(df, amenity, radius, apikey):
 
 <img src="../img/residual.png" width="400" height="380">
 
-- The final model has coefficient of determination ($R^{2}$) of 0.8 meaning that the 80% of the observation variation is explained by the model.
+- The final model has coefficient of determination ($R^{2}$) of 0.8, meaning that the 80% of the observation variation is explained by the model.
 
 
 #
@@ -305,7 +305,7 @@ def location_api(df, amenity, radius, apikey):
 
 ---
 
-- Picklized the final gbm model and wrote a flask application to deploy as an heroku app.
+- Picklized the final model and wrote a flask application to deploy as an heroku app.
 - [Deployed model in Heroku ](https://chi-apt-rental-app.herokuapp.com)
 
 #
