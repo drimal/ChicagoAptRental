@@ -235,7 +235,7 @@ def get_distance_from_union_station(lon2, lat2):
 - Beds
 - Baths
 - One-hot-encoded neighborhoods
-- Also explored other features like number of train/bus stations and other amenities around the neighborhood using locationiq.com api
+- Also explored other features like number of train/bus stations and other amenities around the neighborhood using locationiq.com API
 
 </div>
 <div class='right'>
@@ -291,8 +291,8 @@ def location_api(df, amenity, radius, apikey):
 
 ---
 
-<img src="../img/residual.png" width="400" height="380">
-
+<img src="../img/residual.png" width="400" height="380" class="left">
+<div class='right'
 - The final model has coefficient of determination ($R^{2}$) of 0.8, meaning that the 80% of the observation variation is explained by the model.
 
 
@@ -313,4 +313,4 @@ def location_api(df, amenity, radius, apikey):
 - Developed end-to-end project (data collection, cleaning/wrangling, modeling, model deployment) to model apartment rental price in Chicago using craigslist data
 
 - Other Data Science Project:
-    - [Modeling Restaurant Inspection in the city of Chicago](https://github.com/drimal/chicagofood)
+    - [Modeling Restaurant Inspection in the city of Chicago](https://github.com/drimal/chicagofood) : Multiple data from city of Chicago's Open Data API ( food inspection, crime, 311 sanitation complaints, business license, business licenses), Daily temperatures, yelp ratings/reviews. 
