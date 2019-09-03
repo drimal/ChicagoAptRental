@@ -237,10 +237,10 @@ def get_distance_from_union_station(lon2, lat2):
 ---
 
 <div class='left'>
-- beds
-- baths
-- one-hot-encoded neighborhoods
-- Explored other features like number of train/bus stations and other amenities around the neighborhood using locationiq.com api
+- Beds
+- Baths
+- One-hot-encoded neighborhoods
+- Also explored other features like number of train/bus stations and other amenities around the neighborhood using locationiq.com api
 
 </div>
 <div class='right'>
