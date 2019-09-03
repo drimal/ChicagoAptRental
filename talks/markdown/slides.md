@@ -240,6 +240,7 @@ def get_distance_from_union_station(lon2, lat2):
 - beds
 - baths
 - one-hot-encoded neighborhoods
+- Explored other features like number of train/bus stations and other amenities around the neighborhood using locationiq.com api
 
 </div>
 <div class='right'>
@@ -277,7 +278,8 @@ def location_api(df, amenity, radius, apikey):
     return df
 ```
 </div>
-- Explored other features like number of train/bus stations and other amenities around the neighborhood using locationiq.com api but the improvement was minimal so these did not get into the final model.
+
+-The improvement was minimal so these new features did not get into the final model.
 
 ## Results
 

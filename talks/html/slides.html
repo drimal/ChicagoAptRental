@@ -283,6 +283,7 @@ class CraiglistscraperSpider(scrapy.Spider):
 <li>beds</li>
 <li>baths</li>
 <li>one-hot-encoded neighborhoods</li>
+<li>Explored other features like number of train/bus stations and other amenities around the neighborhood using locationiq.com api</li>
 </ul>
 </div>
 <div class="right">
@@ -318,9 +319,7 @@ def location_api(df, amenity, radius, apikey):
 
     return df</code></pre>
 </div>
-<ul>
-<li>Explored other features like number of train/bus stations and other amenities around the neighborhood using locationiq.com api but the improvement was minimal so these did not get into the final model.</li>
-</ul>
+<p>-The improvement was minimal so these new features did not get into the final model.</p>
 </section>
 <section id="results" class="level2">
 <h2>Results</h2>
