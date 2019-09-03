@@ -283,7 +283,6 @@ class CraiglistscraperSpider(scrapy.Spider):
 <li>beds</li>
 <li>baths</li>
 <li>one-hot-encoded neighborhoods</li>
-<li>Explored other features like number of train/bus stations and other amenities around the neighborhood using locationiq.com api but the improvement was minimal so these did not get into the final model.</li>
 </ul>
 </div>
 <div class="right">
@@ -319,6 +318,9 @@ def location_api(df, amenity, radius, apikey):
 
     return df</code></pre>
 </div>
+<ul>
+<li>Explored other features like number of train/bus stations and other amenities around the neighborhood using locationiq.com api but the improvement was minimal so these did not get into the final model.</li>
+</ul>
 </section>
 <section id="results" class="level2">
 <h2>Results</h2>
@@ -344,8 +346,8 @@ def location_api(df, amenity, radius, apikey):
 <h2>Model Deployment</h2>
 <hr />
 <ul>
-<li>Picklized the final model and wrote a flask application to deploy as an heroku app.</li>
-<li><a href="https://chi-apt-rental-app.herokuapp.com">Deployed model in Heroku</a></li>
+<li><p>Picklized the final model and wrote a flask application to deploy as an heroku app.</p></li>
+<li><p><a href="https://chi-apt-rental-app.herokuapp.com">Deployed model in Heroku</a></p></li>
 </ul>
 </section>
 </section>

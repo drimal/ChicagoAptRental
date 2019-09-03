@@ -240,7 +240,6 @@ def get_distance_from_union_station(lon2, lat2):
 - beds
 - baths
 - one-hot-encoded neighborhoods
-- Explored other features like number of train/bus stations and other amenities around the neighborhood using locationiq.com api but the improvement was minimal so these did not get into the final model.
 
 </div>
 <div class='right'>
@@ -278,6 +277,7 @@ def location_api(df, amenity, radius, apikey):
     return df
 ```
 </div>
+- Explored other features like number of train/bus stations and other amenities around the neighborhood using locationiq.com api but the improvement was minimal so these did not get into the final model.
 
 ## Results
 
@@ -306,6 +306,7 @@ def location_api(df, amenity, radius, apikey):
 ---
 
 - Picklized the final model and wrote a flask application to deploy as an heroku app.
+
 - [Deployed model in Heroku ](https://chi-apt-rental-app.herokuapp.com)
 
 #
