@@ -292,7 +292,7 @@ def location_api(df, amenity, radius, apikey):
 ---
 
 <img src="../img/residual.png" width="400" height="380" class="left">
-<div class='right'
+<div class='right'>
 - The final model has coefficient of determination ($R^{2}$) of 0.8, meaning that the 80% of the observation variation is explained by the model.
 </div>
 
