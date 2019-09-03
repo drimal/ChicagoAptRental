@@ -279,7 +279,7 @@ def location_api(df, amenity, radius, apikey):
 ```
 </div>
 
--The improvement was minimal so these new features did not get into the final model.
+- The improvement was minimal so these new features did not get into the final model.
 
 ## Results
 
