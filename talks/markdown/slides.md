@@ -201,7 +201,7 @@ def get_distance_from_union_station(lon2, lat2):
 ```
 </div>
 
-- Transform latitude, longitude to neighborhoods, use one-hot-encoded neighborhood as the model Feature.
+- Transform latitude, longitude to neighborhoods, use one-hot-encoded neighborhood as the model feature.
 
 ## Correlation Matrix
 
@@ -235,7 +235,7 @@ def get_distance_from_union_station(lon2, lat2):
 - Beds
 - Baths
 - One-hot-encoded neighborhoods
-- Also explored other features like number of train/bus stations and other amenities around the neighborhood using locationiq.com API
+- Also explored other features like number of train/bus stations and other amenities around the neighborhood using locationiq.com API.
 
 </div>
 <div class='right'>
